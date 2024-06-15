@@ -3,7 +3,9 @@ const Footer = () => {
     <footer className="flex h-10 justify-center items-center shadow-inner">
       <p>
         Developed by{" "}
-        <span className="uppercase text-sky-600 font-bold">hasan moosavi</span>
+        <span className="uppercase text-amber-600 font-bold">
+          hasan moosavi
+        </span>
         &copy; allright reserved
       </p>
     </footer>
