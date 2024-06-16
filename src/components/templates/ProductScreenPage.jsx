@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-const ProductScreenPage = ({ product }) => {
+const ProductScreenPage = ({ product, addToCartandler, cart }) => {
   const {
     image,
     name,
@@ -50,7 +50,9 @@ const ProductScreenPage = ({ product }) => {
             <div>Status</div>
             <div> {countInStock > 0 ? "In Stock" : "Unavailable"}</div>
           </div>
-          <button className="primary-button w-full">Add to cart</button>
+          <button className="primary-button w-full" onClick={addToCartandler}>
+            Add to cart
+          </button>
         </div>
       </div>
     </div>
