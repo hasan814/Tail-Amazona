@@ -2,7 +2,7 @@ import CalculateCart from "@/modules/CalculateCart";
 import TableCart from "@/modules/TableCart";
 import Link from "next/link";
 
-const CartPage = ({ cartItems, removeItemHandler }) => {
+const CartPage = ({ cartItems, removeItemHandler, updateCartHandler }) => {
   return (
     <div>
       <h1 className="mb-4 text-xl">Shopping Cart</h1>
@@ -15,6 +15,7 @@ const CartPage = ({ cartItems, removeItemHandler }) => {
           <TableCart
             cartItems={cartItems}
             removeItemHandler={removeItemHandler}
+            updateCartHandler={updateCartHandler}
           />
           <CalculateCart cartItems={cartItems} />
         </div>

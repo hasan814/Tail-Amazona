@@ -16,9 +16,18 @@ const Cart = () => {
     dispatch({ type: "CART_REMOVE_ITEM", payload: item });
   };
 
+  const updateCartHandler = (item, qty) => {
+    const quantity = Number(qty);
+    dispatch({ type: "CART_ADD_ITEM", payload: { ...item, quantity } });
+  };
+
   // ============ Rendering ============
   return (
-    <CartPage cartItems={cartItems} removeItemHandler={removeItemHandler} />
+    <CartPage
+      cartItems={cartItems}
+      updateCartHandler={updateCartHandler}
+      removeItemHandler={removeItemHandler}
+    />
   );
 };
 

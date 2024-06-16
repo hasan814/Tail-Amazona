@@ -4,7 +4,8 @@ import { FiXCircle } from "react-icons/fi";
 import Image from "next/image";
 import Link from "next/link";
 
-const TableCart = ({ cartItems, removeItemHandler }) => {
+const TableCart = ({ cartItems, removeItemHandler, updateCartHandler }) => {
+  // ============= Rendering =============
   return (
     <div className="overflow-x-auto md:col-span-3">
       <table className="min-w-full">
@@ -32,7 +33,18 @@ const TableCart = ({ cartItems, removeItemHandler }) => {
                   </a>
                 </Link>
               </td>
-              <td className="p-5 text-right">{item.quantity}</td>
+              <td className="p-5 text-right">
+                <select
+                  value={item.quantity}
+                  onChange={(e) => updateCartHandler(item, e.target.value)}
+                >
+                  {[...Array(item.countInStock).keys()].map((item) => (
+                    <option value={item + 1} key={uuidv4()}>
+                      {item + 1}
+                    </option>
+                  ))}
+                </select>
+              </td>
               <td className="p-5 text-right">{item.price}</td>
               <td className="p-5 text-center">
                 <button onClick={() => removeItemHandler(item)}>
