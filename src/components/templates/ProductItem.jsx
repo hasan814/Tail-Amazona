@@ -10,7 +10,7 @@ const ProductItem = ({ product }) => {
           src={image}
           alt={name}
           className="rounded shadow"
-          width={300}
+          width={400}
           height={300}
         />
       </Link>

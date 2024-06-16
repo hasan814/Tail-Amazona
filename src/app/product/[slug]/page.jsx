@@ -6,8 +6,12 @@ import { Store } from "@/utils/Store";
 import ProductScreenPage from "@/templates/ProductScreenPage";
 import data from "@/utils/data";
 import { toast, Toaster } from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 const ProductScreen = ({ params }) => {
+  // =============== Router ===============
+  const router = useRouter();
+
   // =============== Constant ===============
   const { slug } = params;
   const { products } = data;
@@ -27,6 +31,7 @@ const ProductScreen = ({ params }) => {
       return;
     }
     dispatch({ type: "CART_ADD_ITEM", payload: { ...product, quantity } });
+    router.push("/cart");
   };
 
   // =============== Rendering ===============
