@@ -25,8 +25,8 @@ const Header = () => {
               </span>
             )}
           </Link>
-          <Link href="/login" className="p-2">
-            Login
+          <Link href="/signin" className="p-2">
+            Sign In
           </Link>
         </div>
       </nav>
