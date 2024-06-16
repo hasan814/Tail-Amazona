@@ -1,6 +1,8 @@
 "use client";
 
-import { createContext, useReducer } from "react";
+import { createContext, useEffect, useReducer, useState } from "react";
+
+import Cookies from "js-cookie";
 
 export const Store = createContext();
 
@@ -20,22 +22,43 @@ const reducer = (state, action) => {
             item.name === existItem.name ? newItem : item
           )
         : [...state.cart.cartItems, newItem];
+      Cookies.set("cart", JSON.stringify({ ...state.cart, cartItems }));
       return { ...state, cart: { ...state.cart, cartItems } };
     }
     case "CART_REMOVE_ITEM": {
       const cartItems = state.cart.cartItems.filter(
         (item) => item.slug !== action.payload.slug
       );
+      Cookies.set("cart", JSON.stringify({ ...state.cart, cartItems }));
       return { ...state, cart: { ...state.cart, cartItems } };
     }
-
+    case "INITIALIZE_CART": {
+      return { ...state, cart: action.payload };
+    }
     default:
       return state;
   }
 };
 
 export function StoreProvider({ children }) {
+  // ============== Context ===============
   const [state, dispatch] = useReducer(reducer, initialState);
   const value = { state, dispatch };
+
+  // ============== State ===============
+  const [isInitialized, setisInitialized] = useState(false);
+
+  // ============== Effect ===============
+  useEffect(() => {
+    const cart = Cookies.get("cart")
+      ? JSON.parse(Cookies.get("cart"))
+      : { cartItems: [] };
+    dispatch({ type: "INITIALIZE_CART", payload: cart });
+    setisInitialized(true);
+  }, []);
+
+  // ============== Rendering ===============
+  if (!isInitialized) return null;
+
   return <Store.Provider value={value}>{children}</Store.Provider>;
 }
