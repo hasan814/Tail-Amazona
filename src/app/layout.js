@@ -3,6 +3,7 @@ import "./globals.css";
 import Header from "@/layout/Header";
 import Footer from "@/layout/Footer";
 import { StoreProvider } from "@/utils/Store";
+import NextAuthProvider from "@/providers/NextAuthProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,11 +18,13 @@ export default function RootLayout({ children }) {
       <body
         className={`${inter.className} flex flex-col min-h-screen justify-between`}
       >
-        <StoreProvider>
-          <Header />
-          <main className="container m-auto mt-4 px-4">{children}</main>
-          <Footer />
-        </StoreProvider>
+        <NextAuthProvider>
+          <StoreProvider>
+            <Header />
+            <main className="container m-auto mt-4 px-4">{children}</main>
+            <Footer />
+          </StoreProvider>
+        </NextAuthProvider>
       </body>
     </html>
   );

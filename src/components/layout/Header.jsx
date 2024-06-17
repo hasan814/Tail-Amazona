@@ -1,10 +1,15 @@
 "use client";
 
+import Loader from "@/elements/Loader";
 import { Store } from "@/utils/Store";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useContext } from "react";
 
 const Header = () => {
+  // =========== Session =============
+  const { data, status } = useSession();
+
   // =========== Context =============
   const { state } = useContext(Store);
   const { cart } = state;
@@ -26,7 +31,13 @@ const Header = () => {
             )}
           </Link>
           <Link href="/signin" className="p-2">
-            Sign In
+            {status === "loading" ? (
+              <Loader />
+            ) : data?.user ? (
+              data?.user.name.toUpperCase()
+            ) : (
+              <Link href={"/signin"}>Sign In</Link>
+            )}
           </Link>
         </div>
       </nav>

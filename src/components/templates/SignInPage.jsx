@@ -14,6 +14,7 @@ const SignUpPage = () => {
 
   // ============ State ==========
   const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -24,11 +25,17 @@ const SignUpPage = () => {
     const response = await signIn("credentials", {
       email,
       password,
+      name,
       redirect: false,
     });
     setLoading(false);
-    if (response.error) router.push(response.error);
-    else router.push("/");
+    if (response.error) {
+      toast.error(response.error);
+      router.push("/signup");
+    } else {
+      toast.success("Sign in Successfully");
+      router.push("/");
+    }
   };
 
   // ============ Redndering ==========
@@ -36,6 +43,18 @@ const SignUpPage = () => {
     <form className="mx-auto max-w-screen-md">
       <Toaster />
       <h1 className="mb-4 text-xl">Login page</h1>
+      <div className="mb-4">
+        <label htmlFor="name">Name</label>
+        <input
+          type="text"
+          className="w-full"
+          placeholder="Name..."
+          id="name"
+          value={name}
+          onChange={(event) => setName(event.target.value)}
+          autoFocus
+        />
+      </div>
       <div className="mb-4">
         <label htmlFor="email">Email</label>
         <input

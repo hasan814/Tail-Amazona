@@ -1,6 +1,7 @@
+import { v4 as uuidv4 } from "uuid";
+
 import ProductItem from "@/templates/ProductItem";
 import data from "@/utils/data";
-import { v4 as uuidv4 } from "uuid";
 
 const Home = () => {
   const { products } = data;

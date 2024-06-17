@@ -3,6 +3,7 @@
 import { toast, Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+
 import Link from "next/link";
 import Loader from "@/elements/Loader";
 
@@ -11,10 +12,12 @@ const SignUpPage = () => {
   const router = useRouter();
 
   // ============ State ==========
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
   const [loading, setLoading] = useState(false);
+
   // ============ Function ==========
   const signUpHandler = async (event) => {
     event.preventDefault();
@@ -25,7 +28,7 @@ const SignUpPage = () => {
     setLoading(true);
     const response = await fetch("/api/auth/signup", {
       method: "POST",
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ name, email, password }),
       headers: { "Content-Type": "application/json" },
     });
     const data = await response.json();
@@ -39,6 +42,18 @@ const SignUpPage = () => {
     <form className="mx-auto max-w-screen-md">
       <Toaster />
       <h1 className="mb-4 text-xl">Register</h1>
+      <div className="mb-4">
+        <label htmlFor="name">Name</label>
+        <input
+          type="text"
+          className="w-full"
+          placeholder="Name..."
+          id="name"
+          value={name}
+          onChange={(event) => setName(event.target.value)}
+          autoFocus
+        />
+      </div>
       <div className="mb-4">
         <label htmlFor="email">Email</label>
         <input

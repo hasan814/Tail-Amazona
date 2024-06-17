@@ -7,7 +7,7 @@ import SignInPage from "@/templates/SignInPage";
 const SignIn = async () => {
   // ========= Session ==========
   const session = await getServerSession(authOptions);
-  if (session) redirect("/");
+  if (session) redirect("/signin");
 
   // ========= Rendering ==========
   return <SignInPage />;

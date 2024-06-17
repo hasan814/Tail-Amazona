@@ -8,8 +8,8 @@ export const POST = async (req) => {
   try {
     await connectDB();
 
-    const { email, password } = await req.json();
-    if (!email || !password)
+    const { email, password, name } = await req.json();
+    if (!email || !password || !name)
       return NextResponse.json({ error: "Invalid Data!" }, { status: 422 });
 
     const existingUser = await User.findOne({ email });
@@ -20,7 +20,11 @@ export const POST = async (req) => {
       );
 
     const hashedPassword = await hashPassword(password);
-    const newUser = await User.create({ email, password: hashedPassword });
+    const newUser = await User.create({
+      name,
+      email,
+      password: hashedPassword,
+    });
 
     return NextResponse.json({ message: "Created Account!" }, { status: 201 });
   } catch (error) {
