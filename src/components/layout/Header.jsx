@@ -1,18 +1,29 @@
 "use client";
 
-import Loader from "@/elements/Loader";
-import { Store } from "@/utils/Store";
 import { useSession } from "next-auth/react";
-import Link from "next/link";
 import { useContext } from "react";
+import { signOut } from "next-auth/react";
+import { Store } from "@/utils/Store";
+
+import UserMenu from "@/modules/UserMenu";
+import Cookies from "js-cookie";
+import Loader from "@/elements/Loader";
+import Link from "next/link";
 
 const Header = () => {
   // =========== Session =============
   const { data, status } = useSession();
 
   // =========== Context =============
-  const { state } = useContext(Store);
+  const { state, dispatch } = useContext(Store);
   const { cart } = state;
+
+  // =========== Function =============
+  const logoutHandler = () => {
+    Cookies.remove("cart");
+    dispatch({ type: "CART_RESET" });
+    signOut({ callbackUrl: "/signin" });
+  };
 
   // =========== Rendering =============
   return (
@@ -34,7 +45,7 @@ const Header = () => {
             {status === "loading" ? (
               <Loader />
             ) : data?.user ? (
-              data?.user.name.toUpperCase()
+              <UserMenu data={data} logoutHandler={logoutHandler} />
             ) : (
               <Link href={"/signin"}>Sign In</Link>
             )}

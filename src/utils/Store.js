@@ -35,6 +35,16 @@ const reducer = (state, action) => {
     case "INITIALIZE_CART": {
       return { ...state, cart: action.payload };
     }
+    case "CART_RESET": {
+      return {
+        ...state,
+        cart: {
+          cartItems: [],
+          shippingAddress: { location: {} },
+          paymentMethod: "",
+        },
+      };
+    }
     default:
       return state;
   }
