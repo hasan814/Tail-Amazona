@@ -7,7 +7,7 @@ import Cookies from "js-cookie";
 export const Store = createContext();
 
 const initialState = {
-  cart: { cartItems: [] },
+  cart: { cartItems: [], shippingAddress: {} },
 };
 
 const reducer = (state, action) => {
@@ -35,7 +35,7 @@ const reducer = (state, action) => {
     case "INITIALIZE_CART": {
       return { ...state, cart: action.payload };
     }
-    case "CART_RESET": {
+    case "CART_RESET":
       return {
         ...state,
         cart: {
@@ -44,7 +44,15 @@ const reducer = (state, action) => {
           paymentMethod: "",
         },
       };
-    }
+
+    case "SAVE_SHIPPING_ADDRESS":
+      return {
+        ...state,
+        cart: {
+          ...state.cart,
+          shippingAddress: { ...state.cart.shippingAddress, ...action.payload },
+        },
+      };
     default:
       return state;
   }
@@ -62,7 +70,7 @@ export function StoreProvider({ children }) {
   useEffect(() => {
     const cart = Cookies.get("cart")
       ? JSON.parse(Cookies.get("cart"))
-      : { cartItems: [] };
+      : initialState.cart;
     dispatch({ type: "INITIALIZE_CART", payload: cart });
     setisInitialized(true);
   }, []);

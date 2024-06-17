@@ -20,13 +20,7 @@ const ProductScreenPage = ({ product, addToCartandler, cart }) => {
       </div>
       <div className="grid md:grid-cols-4 md:gap-3">
         <div className="md:col-span-2">
-          <Image
-            src={image}
-            alt={name}
-            width={640}
-            height={640}
-            layout="responsive"
-          />
+          <Image src={image} alt={name} width={400} height={300} />
         </div>
         <div>
           <ul>
