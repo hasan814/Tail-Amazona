@@ -1,5 +1,6 @@
 "use client";
 
+import { toast, Toaster } from "react-hot-toast";
 import { useContext } from "react";
 import { Store } from "@/utils/Store";
 
@@ -14,6 +15,7 @@ const Cart = () => {
   // ============ Function ============
   const removeItemHandler = (item) => {
     dispatch({ type: "CART_REMOVE_ITEM", payload: item });
+    toast.success("Remove Product!");
   };
 
   const updateCartHandler = (item, qty) => {
@@ -23,11 +25,14 @@ const Cart = () => {
 
   // ============ Rendering ============
   return (
-    <CartPage
-      cartItems={cartItems}
-      updateCartHandler={updateCartHandler}
-      removeItemHandler={removeItemHandler}
-    />
+    <>
+      <Toaster />
+      <CartPage
+        cartItems={cartItems}
+        updateCartHandler={updateCartHandler}
+        removeItemHandler={removeItemHandler}
+      />
+    </>
   );
 };
 

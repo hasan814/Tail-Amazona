@@ -50,7 +50,7 @@ const ProductScreen = ({ params }) => {
       return;
     }
     dispatch({ type: "CART_ADD_ITEM", payload: { ...product, quantity } });
-    router.push("/cart");
+    toast.success("Product Added to Cart.");
   };
 
   // =============== Rendering ===============
