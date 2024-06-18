@@ -1,12 +1,11 @@
 "use client";
 
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
+import { toast, Toaster } from "react-hot-toast";
+import { useRouter } from "next/navigation";
 import { Store } from "@/utils/Store";
 
 import ProductScreenPage from "@/templates/ProductScreenPage";
-import data from "@/utils/data";
-import { toast, Toaster } from "react-hot-toast";
-import { useRouter } from "next/navigation";
 
 const ProductScreen = ({ params }) => {
   // =============== Router ===============
@@ -14,11 +13,31 @@ const ProductScreen = ({ params }) => {
 
   // =============== Constant ===============
   const { slug } = params;
-  const { products } = data;
-  const product = products.find((item) => item.slug === slug);
+
+  // =============== State ===============
+  const [product, setProduct] = useState(null);
 
   // =============== Context ===============
   const { state, dispatch } = useContext(Store);
+
+  // =============== Effect ===============
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("/api/products");
+        const data = await response.json();
+        if (data) {
+          const fetchedProduct = data.data.find((item) => item.slug === slug);
+          setProduct(fetchedProduct);
+        } else {
+          toast.error(data.error);
+        }
+      } catch (error) {
+        toast.error(error);
+      }
+    };
+    fetchData();
+  }, [slug]);
 
   // =============== Function ===============
   const addToCartHandler = () => {
@@ -35,6 +54,8 @@ const ProductScreen = ({ params }) => {
   };
 
   // =============== Rendering ===============
+  if (!product) return <div>Loading ...</div>;
+
   return (
     <div>
       <Toaster />
