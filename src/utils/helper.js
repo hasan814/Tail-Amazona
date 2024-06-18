@@ -4,3 +4,5 @@ export const LinkShipping = [
   "Payment Method",
   "Place Order",
 ];
+
+export const payments = ["PayPal", "Stripe", "CashOnDelivery"];
