@@ -1,3 +1,4 @@
+// ============ Links ============
 export const LinkShipping = [
   "User Login",
   "Shipping Address",
@@ -6,3 +7,10 @@ export const LinkShipping = [
 ];
 
 export const payments = ["PayPal", "Stripe", "CashOnDelivery"];
+
+// ============ Error ============
+export const getError = (error) => {
+  error.response && error.response.data && error.response.data.message
+    ? error.response.data.message
+    : error.message;
+};
