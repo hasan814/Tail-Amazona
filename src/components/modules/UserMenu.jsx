@@ -21,10 +21,7 @@ const UserMenu = ({ data, logoutHandler }) => {
           </Link>
         </MenuItem>
         <MenuItem>
-          <Link
-            href={"/order-history"}
-            className="block p-2 data-[focus]:bg-blue-100"
-          >
+          <Link href={"/"} className="block p-2 data-[focus]:bg-blue-100">
             Order History
           </Link>
         </MenuItem>
